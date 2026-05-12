@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dubhe Hub — AI Model Gateway</title>
+<meta name="description" content="Dubhe Hub is your gateway to premium Chinese AI models. OpenAI-compatible API, unified access to DeepSeek, Qwen, and more.">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #080c18;
+  color: #e2e8f0;
+  font-family: -apple-system, 'Inter', 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+.stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.star { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; animation: twinkle 4s infinite; }
+@keyframes twinkle { 0%,100% { opacity: 0.2; } 50% { opacity: 1; } }
+
+.container {
+  position: relative; z-index: 1;
+  max-width: 800px; width: 100%; padding: 80px 24px;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+/* Orbit animation */
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+}
+@keyframes orbit2 {
+  0% { transform: rotate(180deg) translateX(160px) rotate(-180deg); }
+  100% { transform: rotate(540deg) translateX(160px) rotate(-540deg); }
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 20px rgba(59,130,246,0.3); }
+  50% { box-shadow: 0 0 40px rgba(59,130,246,0.6), 0 0 80px rgba(59,130,246,0.2); }
+}
+@keyframes drift {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Big Dipper constellation */
+.dipper {
+  position: relative; width: 200px; height: 200px; margin-bottom: 20px;
+}
+.dipper .dot {
+  position: absolute; width: 6px; height: 6px;
+  background: #3B82F6; border-radius: 50%;
+  box-shadow: 0 0 10px #3B82F6, 0 0 20px rgba(59,130,246,0.3);
+}
+.dipper .dot:nth-child(1) { top: 10px; left: 100px; }  /* Dubhe */
+.dipper .dot:nth-child(2) { top: 40px; left: 130px; }
+.dipper .dot:nth-child(3) { top: 80px; left: 140px; }
+.dipper .dot:nth-child(4) { top: 100px; left: 110px; }
+.dipper .dot:nth-child(5) { top: 130px; left: 130px; }
+.dipper .dot:nth-child(6) { top: 145px; left: 100px; }
+.dipper .dot:nth-child(7) { top: 170px; left: 105px; }
+.dipper .dot:nth-child(1)::after {
+  content: 'Dubhe'; position: absolute; top: 8px; left: -16px;
+  font-size: 0.65rem; color: #93c5fd; white-space: nowrap;
+}
+/* Lines connecting dots */
+.dipper svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+.dipper svg line { stroke: rgba(59,130,246,0.25); stroke-width: 1; }
+
+.brand {
+  font-size: 3.2rem; font-weight: 700; text-align: center;
+  background: linear-gradient(135deg, #3B82F6, #22D3EE, #818cf8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+}
+.brand-sub {
+  font-size: 1.1rem; color: #64748b; text-align: center;
+  margin-bottom: 12px; letter-spacing: 3px; text-transform: uppercase;
+}
+.tagline {
+  font-size: 1rem; color: #94a3b8; text-align: center;
+  max-width: 500px; line-height: 1.6; margin-bottom: 40px;
+}
+
+.badge-row {
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  margin-bottom: 48px;
+}
+.badge {
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 20px; padding: 6px 16px;
+  font-size: 0.82rem; color: #93c5fd;
+}
+
+.features {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  width: 100%; max-width: 600px; margin-bottom: 48px;
+}
+.feature {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px; padding: 20px; text-align: center;
+}
+.feature-icon { font-size: 1.5rem; margin-bottom: 8px; }
+.feature-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+.feature-desc { font-size: 0.8rem; color: #64748b; line-height: 1.4; }
+
+.models {
+  width: 100%; margin-bottom: 48px;
+}
+.models-title {
+  font-size: 1.1rem; font-weight: 600; text-align: center;
+  margin-bottom: 16px; color: #94a3b8;
+}
+.model-list {
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+}
+.model-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 10px 18px;
+  font-size: 0.85rem; color: #e2e8f0;
+}
+.model-item small { color: #64748b; font-size: 0.7rem; }
+
+.cta {
+  display: inline-block;
+  background: linear-gradient(135deg, #3B82F6, #818cf8);
+  color: #fff; text-decoration: none;
+  padding: 14px 36px; border-radius: 10px;
+  font-weight: 600; font-size: 1rem;
+  transition: all 0.3s; margin-bottom: 48px;
+}
+.cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(59,130,246,0.3); }
+
+.footer {
+  padding: 20px; text-align: center;
+  font-size: 0.78rem; color: #475569; line-height: 1.8;
+}
+.footer a { color: #3B82F6; text-decoration: none; }
+
+@media (max-width: 500px) {
+  .features { grid-template-columns: 1fr; }
+  .brand { font-size: 2.4rem; }
+}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+
+<div class="container">
+  <!-- Big Dipper -->
+  <div class="dipper">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <svg><line x1="103" y1="13" x2="133" y2="43"/><line x1="133" y1="43" x2="143" y2="83"/><line x1="143" y1="83" x2="113" y2="103"/><line x1="113" y1="103" x2="133" y2="133"/><line x1="133" y1="133" x2="103" y2="148"/><line x1="103" y1="148" x2="108" y2="173"/></svg>
+  </div>
+
+  <div class="brand">Dubhe Hub</div>
+  <div class="brand-sub">&#9733; The First Star &#9733;</div>
+  <div class="tagline">
+    Your gateway to premium Chinese AI models.<br>
+    OpenAI-compatible API, unified access, global scale.
+  </div>
+
+  <div class="badge-row">
+    <span class="badge">OpenAI Compatible</span>
+    <span class="badge">DeepSeek</span>
+    <span class="badge">Qwen</span>
+    <span class="badge">Low Latency</span>
+    <span class="badge">Global CDN</span>
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">🔌</div>
+      <div class="feature-title">OpenAI Compatible</div>
+      <div class="feature-desc">Drop-in replacement for OpenAI API. Change one line of code, access all models.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🧠</div>
+      <div class="feature-title">Multiple Models</div>
+      <div class="feature-desc">DeepSeek, Qwen, GLM — pick the best model for each task, all from one API.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🌐</div>
+      <div class="feature-title">Global Access</div>
+      <div class="feature-desc">Low-latency nodes across Asia, Americas and Europe. Fast from anywhere.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">💰</div>
+      <div class="feature-title">Cost Effective</div>
+      <div class="feature-desc">Access premium Chinese models at a fraction of Western API pricing.</div>
+    </div>
+  </div>
+
+  <div class="models">
+    <div class="models-title">&#9670; Supported Models &#9670;</div>
+    <div class="model-list">
+      <span class="model-item">DeepSeek V4 <small>— Flash & Pro</small></span>
+      <span class="model-item">Qwen Max <small>— 72B</small></span>
+      <span class="model-item">Qwen Coder <small>— 32B</small></span>
+      <span class="model-item">GLM-4 <small>— 130B</small></span>
+      <span class="model-item">DeepSeek R1 <small>— Reasoning</small></span>
+      <span class="model-item"><span style="color:#64748b;">More coming...</span></span>
+    </div>
+  </div>
+
+  <a href="mailto:hello@dubhehub.com" class="cta">Get Early Access</a>
+
+  <div class="footer">
+    <span style="color:#3B82F6;">&#9733;</span> Dubhe — the first star of the Big Dipper<br>
+    <a href="https://tianshu.ink">Tianshu Insight</a> &middot; <a href="https://tianshu.shop">Tianshu Explore</a>
+    <br><br>
+    &copy; 2026 Dubhe Hub. All rights reserved.
+  </div>
+</div>
+
+<script>
+  for(let i=0;i<80;i++){
+    let s=document.createElement('div');s.className='star';
+    s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+    s.style.animationDelay=Math.random()*4+'s';s.style.width=(Math.random()*2+1)+'px';
+    document.querySelector('.stars').appendChild(s);
+  }
+</script>
+</body>
+</html>
