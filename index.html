@@ -212,7 +212,7 @@ body {
     <div class="sub-title">Get Early Access</div>
     <div class="sub-desc">Be the first to know when we launch. No spam, unsubscribe anytime.</div>
     <form class="sub-form" id="subForm" novalidate>
-      <input type="email" id="subEmail" placeholder="your@email.com" required class="sub-input">
+      <input type="email" id="subEmail" placeholder="your@email.com" required class="sub-input" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="Please enter a valid email address">
       <button type="submit" class="sub-btn" id="subBtn">Notify Me</button>
     </form>
     <div class="success-msg" id="successMsg">&#10003; You are on the list! We will notify you when we launch.</div>
