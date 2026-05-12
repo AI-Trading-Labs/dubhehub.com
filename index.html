@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dubhe Hub — AI Model Gateway</title>
+<title>Dubhe Hub -- AI Model Gateway</title>
 <meta name="description" content="Dubhe Hub is your gateway to premium Chinese AI models. OpenAI-compatible API, unified access to DeepSeek, Qwen, and more.">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -20,13 +20,11 @@ body {
 .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 .star { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; animation: twinkle 4s infinite; }
 @keyframes twinkle { 0%,100% { opacity: 0.2; } 50% { opacity: 1; } }
-
 .container {
   position: relative; z-index: 1;
   max-width: 800px; width: 100%; padding: 80px 24px;
   display: flex; flex-direction: column; align-items: center;
 }
-
 .dipper {
   position: relative; width: 200px; height: 200px; margin-bottom: 20px;
 }
@@ -48,7 +46,6 @@ body {
 }
 .dipper svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 .dipper svg line { stroke: rgba(59,130,246,0.25); stroke-width: 1; }
-
 .brand {
   font-size: 3.2rem; font-weight: 700; text-align: center;
   background: linear-gradient(135deg, #3B82F6, #22D3EE, #818cf8);
@@ -65,7 +62,6 @@ body {
   font-size: 1rem; color: #94a3b8; text-align: center;
   max-width: 500px; line-height: 1.6; margin-bottom: 40px;
 }
-
 .badge-row {
   display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
   margin-bottom: 48px;
@@ -76,7 +72,6 @@ body {
   border-radius: 20px; padding: 6px 16px;
   font-size: 0.82rem; color: #93c5fd;
 }
-
 .features {
   display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
   width: 100%; max-width: 600px; margin-bottom: 48px;
@@ -89,7 +84,6 @@ body {
 .feature-icon { font-size: 1.5rem; margin-bottom: 8px; }
 .feature-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
 .feature-desc { font-size: 0.8rem; color: #64748b; line-height: 1.4; }
-
 .models {
   width: 100%; margin-bottom: 48px;
 }
@@ -107,7 +101,6 @@ body {
   font-size: 0.85rem; color: #e2e8f0;
 }
 .model-item small { color: #64748b; font-size: 0.7rem; }
-
 .subscribe {
   width: 100%; max-width: 420px; text-align: center;
   margin-bottom: 48px;
@@ -138,13 +131,11 @@ body {
   display: none;
 }
 .success-msg.show { display: block; }
-
 .footer {
   padding: 20px; text-align: center;
   font-size: 0.78rem; color: #475569; line-height: 1.8;
 }
 .footer a { color: #3B82F6; text-decoration: none; }
-
 @media (max-width: 500px) {
   .features { grid-template-columns: 1fr; }
   .brand { font-size: 2.4rem; }
@@ -237,7 +228,6 @@ body {
 
 <script>
 (function(){
-  // Stars background
   var container = document.querySelector('.stars');
   for(var i=0;i<80;i++){
     var s=document.createElement('div');
@@ -249,50 +239,47 @@ body {
     container.appendChild(s);
   }
 
-  // Email subscription via GitHub Issues
   var form=document.getElementById('subForm');
-  var emailInput=document.getElementById('subEmail');
-  var btn=document.getElementById('subBtn');
-  var msg=document.getElementById('successMsg');
+  if(form){
+    var input=document.getElementById('subEmail');
+    var btn=document.getElementById('subBtn');
+    var msg=document.getElementById('successMsg');
 
-  form.addEventListener('submit', function(evt){
-    evt.preventDefault();
-    var val=emailInput.value.trim();
-    if(!val)return;
+    form.addEventListener('submit',function(evt){
+      evt.preventDefault();
+      var val=input.value.trim();
+      if(!val)return;
 
-    btn.textContent='Sending...';
-    btn.disabled=true;
-    msg.classList.remove('show');
+      btn.textContent='Sending...';
+      btn.disabled=true;
+      msg.classList.remove('show');
 
-    var xhr=new XMLHttpRequest();
-    xhr.open('POST','https://api.github.com/repos/AI-Trading-Labs/dubhehub.com/issues',true);
-    xhr.setRequestHeader('Accept','application/vnd.github.v3+json');
-    xhr.setRequestHeader('Content-Type','application/json');
-
-    xhr.onload=function(){
-      btn.textContent='Notify Me';
-      btn.disabled=false;
-      if(xhr.status>=200 && xhr.status<300){
-        msg.classList.add('show');
-        form.reset();
-        // Auto-hide after 5 seconds
-        setTimeout(function(){ msg.classList.remove('show'); }, 5000);
-      } else {
-        alert('Submission failed. Please email us at hello@dubhehub.com');
-      }
-    };
-
-    xhr.onerror=function(){
-      btn.textContent='Notify Me';
-      btn.disabled=false;
-      alert('Network error. Please email us at hello@dubhehub.com');
-    };
-
-    xhr.send(JSON.stringify({
-      title:'New subscriber: '+val,
-      body:'## New Early Access Signup\n\n- **Email:** '+val+'\n- **Date:** '+new Date().toISOString()+'\n- **Source:** dubhehub.com'
-    }));
-  });
+      var xhr=new XMLHttpRequest();
+      xhr.open('POST','https://formsubmit.co/ajax/hello@dubhehub.com',true);
+      xhr.setRequestHeader('Content-Type','application/json');
+      xhr.onload=function(){
+        btn.textContent='Notify Me';
+        btn.disabled=false;
+        if(xhr.status>=200 && xhr.status<300){
+          msg.classList.add('show');
+          form.reset();
+          setTimeout(function(){ msg.classList.remove('show'); },5000);
+        } else {
+          alert('Sorry, submission failed. Please email us at hello@dubhehub.com');
+        }
+      };
+      xhr.onerror=function(){
+        btn.textContent='Notify Me';
+        btn.disabled=false;
+        alert('Network error. Please email us at hello@dubhehub.com');
+      };
+      xhr.send(JSON.stringify({
+        email: val,
+        _subject: 'New Dubhe Hub subscriber: ' + val,
+        message: 'Email: ' + val + '\nDate: ' + new Date().toISOString() + '\nSource: dubhehub.com'
+      }));
+    });
+  }
 })();
 </script>
 </body>
