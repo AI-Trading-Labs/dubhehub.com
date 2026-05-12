@@ -245,11 +245,11 @@ body {
   <div class="subscribe">
     <div class="sub-title">Get Early Access</div>
     <div class="sub-desc">Be the first to know when we launch. No spam, unsubscribe anytime.</div>
-    <form class="sub-form" action="https://formspree.io/f/xpwzorqv" method="POST">
-      <input type="email" name="email" placeholder="your@email.com" required class="sub-input">
-      <button type="submit" class="sub-btn">Notify Me</button>
+    <form class="sub-form" id="subForm">
+      <input type="email" id="subEmail" placeholder="your@email.com" required class="sub-input">
+      <button type="submit" class="sub-btn" id="subBtn">Notify Me</button>
     </form>
-    <div class="success-msg">Thanks! We'll keep you posted.</div>
+    <div class="success-msg" id="successMsg">Thanks! We'll keep you posted.</div>
   </div>
 
   <div class="footer">
@@ -268,15 +268,35 @@ body {
     document.querySelector('.stars').appendChild(s);
   }
 
-  // Subscription success handling
-  const subForm = document.querySelector('.sub-form');
-  if (subForm) {
-    subForm.addEventListener('submit', function(e) {
-      const msg = document.querySelector('.success-msg');
+  // Subscribe via GitHub Issues API
+  document.getElementById('subForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('subEmail').value;
+    const btn = document.getElementById('subBtn');
+    const msg = document.getElementById('successMsg');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      await fetch('https://api.github.com/repos/AI-Trading-Labs/dubhehub.com/issues', {
+        method: 'POST',
+        headers: {'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          title: 'New subscriber: ' + email,
+          body: '## New Early Access Signup
+
+- **Email:** ' + email + '
+- **Date:** ' + new Date().toISOString() + '
+- **Source:** dubhehub.com'
+        })
+      });
       msg.style.display = 'block';
-      setTimeout(() => { subForm.reset(); }, 2000);
-    });
-  }
+      this.reset();
+    } catch(err) {
+      alert('Something went wrong. Please email us directly at hello@dubhehub.com');
+    }
+    btn.textContent = 'Notify Me';
+    btn.disabled = false;
+  });
 
 </script>
 </body>
