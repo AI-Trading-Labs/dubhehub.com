@@ -27,26 +27,6 @@ body {
   display: flex; flex-direction: column; align-items: center;
 }
 
-/* Orbit animation */
-@keyframes orbit {
-  0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
-  100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
-}
-@keyframes orbit2 {
-  0% { transform: rotate(180deg) translateX(160px) rotate(-180deg); }
-  100% { transform: rotate(540deg) translateX(160px) rotate(-540deg); }
-}
-@keyframes pulse {
-  0%,100% { box-shadow: 0 0 20px rgba(59,130,246,0.3); }
-  50% { box-shadow: 0 0 40px rgba(59,130,246,0.6), 0 0 80px rgba(59,130,246,0.2); }
-}
-@keyframes drift {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
-}
-
-/* Big Dipper constellation */
 .dipper {
   position: relative; width: 200px; height: 200px; margin-bottom: 20px;
 }
@@ -55,7 +35,7 @@ body {
   background: #3B82F6; border-radius: 50%;
   box-shadow: 0 0 10px #3B82F6, 0 0 20px rgba(59,130,246,0.3);
 }
-.dipper .dot:nth-child(1) { top: 10px; left: 100px; }  /* Dubhe */
+.dipper .dot:nth-child(1) { top: 10px; left: 100px; }
 .dipper .dot:nth-child(2) { top: 40px; left: 130px; }
 .dipper .dot:nth-child(3) { top: 80px; left: 140px; }
 .dipper .dot:nth-child(4) { top: 100px; left: 110px; }
@@ -66,7 +46,6 @@ body {
   content: 'Dubhe'; position: absolute; top: 8px; left: -16px;
   font-size: 0.65rem; color: #93c5fd; white-space: nowrap;
 }
-/* Lines connecting dots */
 .dipper svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 .dipper svg line { stroke: rgba(59,130,246,0.25); stroke-width: 1; }
 
@@ -129,27 +108,6 @@ body {
 }
 .model-item small { color: #64748b; font-size: 0.7rem; }
 
-.cta {
-  display: inline-block;
-  background: linear-gradient(135deg, #3B82F6, #818cf8);
-  color: #fff; text-decoration: none;
-  padding: 14px 36px; border-radius: 10px;
-  font-weight: 600; font-size: 1rem;
-  transition: all 0.3s; margin-bottom: 48px;
-}
-.cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(59,130,246,0.3); }
-
-.footer {
-  padding: 20px; text-align: center;
-  font-size: 0.78rem; color: #475569; line-height: 1.8;
-}
-.footer a { color: #3B82F6; text-decoration: none; }
-
-@media (max-width: 500px) {
-  .features { grid-template-columns: 1fr; }
-  .brand { font-size: 2.4rem; }
-}
-
 .subscribe {
   width: 100%; max-width: 420px; text-align: center;
   margin-bottom: 48px;
@@ -172,15 +130,32 @@ body {
   cursor: pointer; transition: all 0.3s; white-space: nowrap;
 }
 .sub-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(59,130,246,0.3); }
-.success-msg { color: #22D3EE; font-size: 0.85rem; margin-top: 10px; display: none; }
+.sub-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.success-msg {
+  color: #22D3EE; font-size: 0.9rem; margin-top: 12px;
+  padding: 10px; border: 1px solid rgba(34,211,238,0.2);
+  border-radius: 8px; background: rgba(34,211,238,0.05);
+  display: none;
+}
+.success-msg.show { display: block; }
 
+.footer {
+  padding: 20px; text-align: center;
+  font-size: 0.78rem; color: #475569; line-height: 1.8;
+}
+.footer a { color: #3B82F6; text-decoration: none; }
+
+@media (max-width: 500px) {
+  .features { grid-template-columns: 1fr; }
+  .brand { font-size: 2.4rem; }
+  .sub-form { flex-direction: column; }
+}
 </style>
 </head>
 <body>
 <div class="stars"></div>
 
 <div class="container">
-  <!-- Big Dipper -->
   <div class="dipper">
     <div class="dot"></div>
     <div class="dot"></div>
@@ -209,22 +184,22 @@ body {
 
   <div class="features">
     <div class="feature">
-      <div class="feature-icon">🔌</div>
+      <div class="feature-icon">&#128268;</div>
       <div class="feature-title">OpenAI Compatible</div>
       <div class="feature-desc">Drop-in replacement for OpenAI API. Change one line of code, access all models.</div>
     </div>
     <div class="feature">
-      <div class="feature-icon">🧠</div>
+      <div class="feature-icon">&#129504;</div>
       <div class="feature-title">Multiple Models</div>
-      <div class="feature-desc">DeepSeek, Qwen, GLM — pick the best model for each task, all from one API.</div>
+      <div class="feature-desc">DeepSeek, Qwen, GLM -- pick the best model for each task, all from one API.</div>
     </div>
     <div class="feature">
-      <div class="feature-icon">🌐</div>
+      <div class="feature-icon">&#127760;</div>
       <div class="feature-title">Global Access</div>
       <div class="feature-desc">Low-latency nodes across Asia, Americas and Europe. Fast from anywhere.</div>
     </div>
     <div class="feature">
-      <div class="feature-icon">💰</div>
+      <div class="feature-icon">&#128176;</div>
       <div class="feature-title">Cost Effective</div>
       <div class="feature-desc">Access premium Chinese models at a fraction of Western API pricing.</div>
     </div>
@@ -233,11 +208,11 @@ body {
   <div class="models">
     <div class="models-title">&#9670; Supported Models &#9670;</div>
     <div class="model-list">
-      <span class="model-item">DeepSeek V4 <small>— Flash & Pro</small></span>
-      <span class="model-item">Qwen Max <small>— 72B</small></span>
-      <span class="model-item">Qwen Coder <small>— 32B</small></span>
-      <span class="model-item">GLM-4 <small>— 130B</small></span>
-      <span class="model-item">DeepSeek R1 <small>— Reasoning</small></span>
+      <span class="model-item">DeepSeek V4 <small>-- Flash &amp; Pro</small></span>
+      <span class="model-item">Qwen Max <small>-- 72B</small></span>
+      <span class="model-item">Qwen Coder <small>-- 32B</small></span>
+      <span class="model-item">GLM-4 <small>-- 130B</small></span>
+      <span class="model-item">DeepSeek R1 <small>-- Reasoning</small></span>
       <span class="model-item"><span style="color:#64748b;">More coming...</span></span>
     </div>
   </div>
@@ -245,15 +220,15 @@ body {
   <div class="subscribe">
     <div class="sub-title">Get Early Access</div>
     <div class="sub-desc">Be the first to know when we launch. No spam, unsubscribe anytime.</div>
-    <form class="sub-form" id="subForm">
+    <form class="sub-form" id="subForm" novalidate>
       <input type="email" id="subEmail" placeholder="your@email.com" required class="sub-input">
       <button type="submit" class="sub-btn" id="subBtn">Notify Me</button>
     </form>
-    <div class="success-msg" id="successMsg">Thanks! We'll keep you posted.</div>
+    <div class="success-msg" id="successMsg">&#10003; You are on the list! We will notify you when we launch.</div>
   </div>
 
   <div class="footer">
-    <span style="color:#3B82F6;">&#9733;</span> Dubhe — the first star of the Big Dipper<br>
+    <span style="color:#3B82F6;">&#9733;</span> Dubhe -- the first star of the Big Dipper<br>
     <a href="https://tianshu.ink">Tianshu Insight</a> &middot; <a href="https://tianshu.shop">Tianshu Explore</a>
     <br><br>
     &copy; 2026 Dubhe Hub. All rights reserved.
@@ -261,43 +236,64 @@ body {
 </div>
 
 <script>
-  for(let i=0;i<80;i++){
-    let s=document.createElement('div');s.className='star';
-    s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
-    s.style.animationDelay=Math.random()*4+'s';s.style.width=(Math.random()*2+1)+'px';
-    document.querySelector('.stars').appendChild(s);
+(function(){
+  // Stars background
+  var container = document.querySelector('.stars');
+  for(var i=0;i<80;i++){
+    var s=document.createElement('div');
+    s.className='star';
+    s.style.left=(Math.random()*100)+'%';
+    s.style.top=(Math.random()*100)+'%';
+    s.style.animationDelay=(Math.random()*4)+'s';
+    s.style.width=(Math.random()*2+1)+'px';
+    container.appendChild(s);
   }
 
-  // Subscribe via GitHub Issues API
-  document.getElementById('subForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const email = document.getElementById('subEmail').value;
-    const btn = document.getElementById('subBtn');
-    const msg = document.getElementById('successMsg');
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
-    try {
-      await fetch('https://api.github.com/repos/AI-Trading-Labs/dubhehub.com/issues', {
-        method: 'POST',
-        headers: {'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          title: 'New subscriber: ' + email,
-          body: '## New Early Access Signup
+  // Email subscription via GitHub Issues
+  var form=document.getElementById('subForm');
+  var emailInput=document.getElementById('subEmail');
+  var btn=document.getElementById('subBtn');
+  var msg=document.getElementById('successMsg');
 
-- **Email:** ' + email + '
-- **Date:** ' + new Date().toISOString() + '
-- **Source:** dubhehub.com'
-        })
-      });
-      msg.style.display = 'block';
-      this.reset();
-    } catch(err) {
-      alert('Something went wrong. Please email us directly at hello@dubhehub.com');
-    }
-    btn.textContent = 'Notify Me';
-    btn.disabled = false;
+  form.addEventListener('submit', function(evt){
+    evt.preventDefault();
+    var val=emailInput.value.trim();
+    if(!val)return;
+
+    btn.textContent='Sending...';
+    btn.disabled=true;
+    msg.classList.remove('show');
+
+    var xhr=new XMLHttpRequest();
+    xhr.open('POST','https://api.github.com/repos/AI-Trading-Labs/dubhehub.com/issues',true);
+    xhr.setRequestHeader('Accept','application/vnd.github.v3+json');
+    xhr.setRequestHeader('Content-Type','application/json');
+
+    xhr.onload=function(){
+      btn.textContent='Notify Me';
+      btn.disabled=false;
+      if(xhr.status>=200 && xhr.status<300){
+        msg.classList.add('show');
+        form.reset();
+        // Auto-hide after 5 seconds
+        setTimeout(function(){ msg.classList.remove('show'); }, 5000);
+      } else {
+        alert('Submission failed. Please email us at hello@dubhehub.com');
+      }
+    };
+
+    xhr.onerror=function(){
+      btn.textContent='Notify Me';
+      btn.disabled=false;
+      alert('Network error. Please email us at hello@dubhehub.com');
+    };
+
+    xhr.send(JSON.stringify({
+      title:'New subscriber: '+val,
+      body:'## New Early Access Signup\n\n- **Email:** '+val+'\n- **Date:** '+new Date().toISOString()+'\n- **Source:** dubhehub.com'
+    }));
   });
-
+})();
 </script>
 </body>
 </html>
